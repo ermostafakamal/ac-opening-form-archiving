@@ -14,7 +14,16 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@dmsportal/core": ["libs/core/src/index.ts"],
+      "@dmsportal/dashboard": ["libs/dashboard/src/index.ts"],
+      "@dmsportal/shared": ["libs/shared/src/index.ts"],
+      "@dmsportal/ui": ["libs/ui/src/index.ts"],
+      "@dmsportal/utils": ["libs/utils/src/index.ts"],
+      "cbsenadocmap/Module": [
+        "apps/remote/cbsenadocmap/src/app/remote-entry/entry.module.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

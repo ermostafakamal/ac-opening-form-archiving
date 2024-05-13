@@ -1,0 +1,99 @@
+{
+  "name": "cbsenadocmap",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "dmsportal",
+  "sourceRoot": "apps/remote/cbsenadocmap/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/remote/cbsenadocmap",
+        "index": "apps/remote/cbsenadocmap/src/index.html",
+        "main": "apps/remote/cbsenadocmap/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/remote/cbsenadocmap/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/remote/cbsenadocmap/src/favicon.ico",
+          "apps/remote/cbsenadocmap/src/assets"
+        ],
+        "styles": ["apps/remote/cbsenadocmap/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/remote/cbsenadocmap/webpack.config.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1000mb",
+              "maximumError": "10000mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "200mb",
+              "maximumError": "1000mb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/remote/cbsenadocmap/webpack.prod.config.ts"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "cbsenadocmap:build:production"
+        },
+        "development": {
+          "buildTarget": "cbsenadocmap:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "cbsenadocmap:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "cbsenadocmap:build",
+        "port": 4201,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "cbsenadocmap:build:development"
+        },
+        "production": {
+          "buildTarget": "cbsenadocmap:build:production"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@import "~@angular/cdk/_overlay.scss";
+
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  &.progress-overlay-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.progress-overlay-section-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.48; /* https://github.com/angular/material2/blob/master/src/cdk/overlay/_overlay.scss#L67 */
+  background: $cdk-overlay-dark-backdrop-background;
+}

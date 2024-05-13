@@ -1,0 +1,522 @@
+<div style="margin: auto; min-width: 300px;" fxLayout="column wrap" fxFlex="95" fxFlex.lg="95" fxFlex.md="90"
+    fxFlex.sm="98" fxFlex.xs="98" *ngIf="!swHideInPrtView && !swInPrtViewExcDt">
+    <mat-card style="min-width: 240px;">
+        <div style="background-color: #81bddbf7; min-width: 230px;">
+
+            <form [formGroup]="searchfieldsFormGroup" #searchfieldsForm>
+
+                <div style="margin: auto; color:#81bddbf7; height:25px; ">
+                    <div
+                        style="font-weight: bolder; font-family: Arial; font-size: 20px; color:navy; text-align: center; ">
+                        Search Fields
+                    </div>
+                </div>
+
+                <div fxLayout="column"
+                    style="background-color: whitesmoke; margin-left: 2px; margin-right: 2px; padding: 5px;">
+                    <div>
+
+                        <div style="background-color: whitesmoke; margin:auto;">
+                            <div mat-dialog-content formGroupName="Searchfields" fxLayout="column wrap">
+                                <div style="margin:10px;" fxLayout="column wrap" >
+                                    <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="50px" fxFlex="50" fxFlex.lg="50" fxFlex.md="50"
+                                        fxFlex.sm="100" fxFlex.xs="100">
+                                    
+                                        <div fxLayout="row" fxFlex="33" fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field  >
+                                                <mat-label>Library:</mat-label>
+                                                <mat-select formControlName="Library" name="Library">
+                                                    <mat-option>--Select--</mat-option>
+                                                    <mat-option *ngFor="let lib of _libraries" [value]="lib.value" [disabled]=" lib.disabled ">
+                                                        {{lib.viewValue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    
+                                        <div fxLayout="row" fxFlex="33" fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field  >
+                                                <mat-label>BranchName:</mat-label>
+                                                <mat-select formControlName="BranchName" name="BranchName">
+                                                    <mat-option *ngFor="let rf of _branchNames" [value]="rf.value" [disabled]=" rf.disabled ">
+                                                        {{rf.viewValue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    
+                                        <div fxLayout="row" fxFlex="33" fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field  >
+                                                <mat-label>ReportType:</mat-label>
+                                                <mat-select formControlName="ReportType" name="ReportType">
+                                                    <mat-option *ngFor="let rf of _reportTypes" [value]="rf.value" [disabled]=" rf.disabled ">
+                                                        {{rf.viewValue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                    
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="50px" fxFlex="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+                                    
+                                        <div fxLayout="row" fxFlex="33" fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field  >
+                                                <mat-label>UserName:</mat-label>
+                                                <mat-select formControlName="UserName" name="UserName">
+                                                    <mat-option *ngFor="let rf of _userNames" [value]="rf.value" [disabled]=" rf.disabled ">
+                                                        {{rf.viewValue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div fxLayout="row" fxFlex="33" fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field appearance="outline"   >
+                                                <mat-label>From Date</mat-label>
+                                                <input matInput [matDatepicker]="startDate" formControlName="FromDate" [attr.disabled]="isFrmDtEnbl">
+                                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                                <mat-datepicker-toggle matSuffix
+                                                    [for]="startDate"></mat-datepicker-toggle>
+                                                <mat-datepicker #startDate disabled="false"></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div fxLayout="row" fxFlex="33" fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field appearance="outline"   >
+                                                <mat-label>To Date</mat-label>
+                                                <input matInput [matDatepicker]="toDate" formControlName="ToDate" [attr.disabled]="isToDtEnbl">
+                                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                                <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                                <mat-datepicker #toDate disabled="false"></mat-datepicker>                                                
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div fxLayout="row" fxFlex="50" fxFlex.lg="10" fxFlex.md="20" fxFlex.sm="30"
+                                    fxFlex.xs="50">
+                                    <!-- <button mat-button type="submit" class="mat-raised-button mat-primary"
+                                        (click)="viewReport()">View Report</button> -->
+
+                                    <button mat-flat-button color="primary" (click)="viewReport()" type="submit">View Report</button>
+                                    </div>
+                                </div>
+
+                                <div class="loading">
+                                    <ngx-loading
+                                      [show]="loading"
+                                      [config]="{
+                                        animationType: ngxLoadingAnimationTypes.circle,
+                                        primaryColour: primaryColour,
+                                        secondaryColour: secondaryColour,
+                                        backdropBorderRadius: '3px'
+                                      }"                                      
+                                    ></ngx-loading>
+                                </div>
+
+                            </div>
+                   
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- <pre>{{searchfieldsFormGroup.value | json}}</pre> -->
+
+
+            </form>
+            <br>
+        </div>
+    </mat-card>    
+</div>
+
+<div style="margin: auto; min-width: 300px;" fxLayout="column wrap" fxFlex="95" fxFlex.lg="95" fxFlex.md="90"
+    fxFlex.sm="98" fxFlex.xs="98" *ngIf="swInPrtViewExcDt" >
+        
+    <div style="min-width: 230px;">            
+
+        <div style="display: flex;" fxLayout="column" >
+            <div fxLayout="row" fxFlex="1 1 100" >
+                <div fxLayout="row" fxFlex="1 1 100" >        
+                    <div fxFlex="100" fxLayoutAlign="center" fxLayoutGap="0px"
+                        style="padding-left:10px; margin: auto; ">
+                        <div><img src="./assets/bankasialtdlogo.png"
+                            style="height: 50px; width: 250px; margin: 5px;" /></div>                                    
+                    </div>
+                </div>                
+            </div>
+            <br/>
+            <div fxLayout="row" fxFlex="1 1 100" >                
+                <div fxLayout="row" fxFlex="1 1 100" >
+                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center none"
+                        style="margin-left: 2px; text-align: center !important;">
+                        <div style="font-size: 40px; font-weight: bold; font-family: 'Times New Roman', Times, serif;">A/C Opening Form Archiving</div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+        <br/><br/><br/>
+        
+        <div fxLayout="column"
+            style="margin-left: 2px; margin-right: 2px; padding: 5px;">
+            <div>
+
+                <div style="margin:auto;">
+                    <div mat-dialog-content fxLayout="column">
+                        
+                        <div style="margin:10px; font-family: Arial;" fxLayout="column" >
+                            
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>Print Date :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{_printDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>Library Name :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.Library}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>Branch Name :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.BranchName}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>User :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.UserName}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>Report Type :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.ReportType}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>From Date :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.FromDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>To Date :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.ToDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>No of A/C :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{parentData.noOfAccounts}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>No of Pages :</b></label>
+                                </div>
+
+                                <div fxFlex="70">
+                                    <label>{{parentData.noOfPages}}</label>
+                                </div>                                                                            
+
+                            </div>
+                             
+                            
+                        </div>
+
+
+
+                        <!--<div style="margin:10px; font-family: Arial;" fxLayout="column wrap" >
+                            
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>Print Date :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{_printDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+                            
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="100" >
+                                        
+                                <div fxFlex="20">
+                                    <label><b>Library Name :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.Library}}</label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label><b>Branch Name :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.BranchName}}</label>
+                                </div>                                    
+                                
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>User :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.UserName}}</label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label><b>Report Type :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.ReportType}}</label>
+                                </div>                                                                                                               
+
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="100" >
+
+                                <div fxFlex="20" >
+                                    <label><b>From Date :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.FromDate | date}}</label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label><b>To Date :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.ToDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="100" >
+
+                                <div fxFlex="20">
+                                    <label><b>No of A/C :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{parentData.noOfAccounts}}</label>
+                                </div>
+
+                                <div fxFlex="20" >
+                                    <label><b>No of Pages :</b></label>
+                                </div>
+
+                                <div fxFlex="25">
+                                    <label>{{parentData.noOfPages}}</label>
+                                </div>                                                                           
+
+                            </div>                                
+                            
+                        </div>-->
+
+                    </div>
+            
+                </div>
+            </div>        
+        </div>
+        
+        <br/><br/>
+
+        <div style="width: 300px; margin: auto;">
+            <p>-- THIS IS SYSTEM GENERATED REPORT --</p>
+        </div> 
+        
+    </div>
+    
+</div>
+
+
+<div style="margin: auto; min-width: 300px;" fxLayout="column wrap" fxFlex="95" fxFlex.lg="95" fxFlex.md="90"
+    fxFlex.sm="98" fxFlex.xs="98" *ngIf="swHideInPrtView" id="srcFldContent">
+        
+    <div style="min-width: 230px;">            
+
+        <div style="display: flex;" fxLayout="column" >
+            <div fxLayout="row" fxFlex="1 1 100" >
+                <div fxLayout="row" fxFlex="1 1 100" >        
+                    <div fxLayout="row" fxFlex="100" fxLayoutAlign="center" fxLayoutGap="0px"
+                        style="margin: auto; ">
+                        <div><img src="./assets/bankasialtdlogo.png"
+                            style="height: 50px; width: 250px; margin: 5px;" /></div>                                    
+                    </div>
+                </div>                
+            </div>
+            <br/>
+            <div fxLayout="row" fxFlex="1 1 100" >
+                <div fxLayout="row" fxFlex="1 1 90" >
+                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center none"
+                        style="margin-left: 2px; text-align: center !important;">
+                        <div style="font-size: 40px; font-weight: bold; font-family: 'Times New Roman', Times, serif;">A/C Opening Form Archiving</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div fxLayout="column"
+            style="margin-left: 2px; margin-right: 2px; padding: 5px;">
+            <div>
+
+                <div style="margin:auto;">
+                    <div mat-dialog-content fxLayout="column wrap">
+                        <div style="margin:10px; font-family: Arial;" fxLayout="column wrap" >
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+                                        
+                                <div fxFlex="12">
+                                    <label><b>Library Name :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.Library}}</label>
+                                </div>
+
+                                <div fxFlex="10">
+                                    <label><b>Branch Name :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.BranchName}}</label>
+                                </div>
+
+                                <div fxFlex="10">
+                                    <label><b>Report Type :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.ReportType}}</label>
+                                </div>
+
+                                
+                                
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+
+                                <div fxFlex="12">
+                                    <label><b>User :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.UserName}}</label>
+                                </div>
+
+                                <div fxFlex="10" >
+                                    <label><b>From Date :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.FromDate | date}}</label>
+                                </div>
+
+                                <div fxFlex="10">
+                                    <label><b>To Date :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{this.searchfieldsFormGroup.value.Searchfields.ToDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px" fxFlex="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+
+                                <div fxFlex="12">
+                                    <label><b>No of A/C :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{parentData.noOfAccounts}}</label>
+                                </div>
+
+                                <div fxFlex="10" >
+                                    <label><b>No of Pages :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{parentData.noOfPages}}</label>
+                                </div>
+
+                                <div fxFlex="10">
+                                    <label><b>Print Date :</b></label>
+                                </div>
+
+                                <div fxFlex="20">
+                                    <label>{{_printDate | date}}</label>
+                                </div>                                                                            
+
+                            </div>
+                            
+                            
+                        </div>
+
+                    </div>
+            
+                </div>
+            </div>        
+        </div>                    
+    </div>
+    
+</div>

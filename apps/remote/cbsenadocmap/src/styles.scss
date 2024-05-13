@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add global styles to this file, and also import other style files */
+
+
+// @import '~ag-grid-community/dist/styles/ag-grid.css';
+// @import '~ag-grid-community/dist/styles/ag-theme-alpine.css';
+
+@import '@ag-grid-community/styles/ag-grid.css';
+@import '@ag-grid-community/styles/ag-theme-alpine.css';
+
+@import "~@simonwep/pickr/dist/themes/nano.min.css"; //for pdf creator
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+
+.mat-mdc-form-field-infix {
+    min-height: 13px !important;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.mat-mdc-menu-panel.mat-mdc-menu-panel {
+    max-width: unset !important;
+    width: 500px;
+}
+
+/* To remove the inside line appears while using tailwind */
+.mdc-notched-outline__notch
+{
+    border-right-width: 0px !important;
+}
