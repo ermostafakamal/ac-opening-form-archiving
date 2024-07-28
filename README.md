@@ -6,11 +6,13 @@
 
 <p>Landing page of this app is:</p> 
 <img src="https://github.com/ermostafakamal/ac-opening-form-archiving/blob/main/apps/dmsportal/src/assets/AC Opening Form Archiving.jpg" width="1200">
+<p>After Submitting, report print view is:</p>
+<img src="https://github.com/ermostafakamal/ac-opening-form-archiving/blob/main/apps/remote/cbsenadocmap/src/assets/EnadocArchiving.png" width="600">
 
 
 ## Start the app
 
-To start the development server run `nx serve DMSPortal`. Open your browser and navigate to http://localhost:4200/. Happy coding!
+To start the development server run `npx nx run cbsenadocmap:serve:development`. Open your browser and navigate to http://localhost:4200/. Happy coding!
 
 
 ## Generate code
